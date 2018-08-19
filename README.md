@@ -30,4 +30,6 @@ var mediaTrigger = new MediaTrigger(
             }
         ]
     });
+
+mediaTrigger.listen();
 ```

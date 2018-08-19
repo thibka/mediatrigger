@@ -6,7 +6,7 @@ export default class MediaTrigger {
 		this.logs = (typeof params.logs == "boolean") ? params.logs : false;
 	}
 
-	check() {
+	_check() {
 		if (this.logs) console.log("[MediaTrigger] "+this.media.currentTime);
 		if (this.ctime >= this.breakpoints[0].triggerTime) {
 			if (this.logs && typeof this.breakpoints[0].name != undefined) console.warn("[MediaTrigger] "+this.breakpoints[0].name);
@@ -20,7 +20,7 @@ export default class MediaTrigger {
 		var that = this;
 		this.interval = setInterval(function(){
 			that.ctime = that.media.currentTime;
-			that.check();
+			that._check();
 		}, this.timeInterval);
 	}
 }
