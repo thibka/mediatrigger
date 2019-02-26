@@ -1,3 +1,8 @@
+/*
+    MediaTrigger v.1.0
+    Outdated, since it doesn't allow percents.
+    See MediaTrigger-es5.js
+*/
 export default class MediaTrigger {
 	constructor(params) {
 		this.media = params.media;

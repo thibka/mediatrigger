@@ -1,7 +1,7 @@
 Description
 ==================
 This class allows callback functions to be triggered at specific time points in an audio or video file.
-
+Time points can be defined in seconds or percents.
 
 Usage
 ==================
@@ -22,8 +22,7 @@ var mediaTrigger = new MediaTrigger(
                 }
             },
             {	
-                triggerTime: 10, 
-                name: "Main theme", // Optional
+                triggerPercent: .25, // Between 0 and 1 
                 action: function(){ 
                     // ...
                 }
