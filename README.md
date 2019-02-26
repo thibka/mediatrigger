@@ -31,4 +31,5 @@ var mediaTrigger = new MediaTrigger(
     });
 
 mediaTrigger.start();
+mediaTrigger.stop();
 ```
