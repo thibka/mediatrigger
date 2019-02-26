@@ -1,36 +1,47 @@
 /*
-    MediaTrigger v.1.0
-    Outdated, since it doesn't allow percents.
-    See MediaTrigger-es5.js
+    MediaTrigger v.1.2
 */
-export default class MediaTrigger {
-	constructor(params) {
-		this.media = params.media;
-		this.breakpoints = params.triggers;
-		this.timeInterval = params.precision;
-		this.logs = (typeof params.logs == "boolean") ? params.logs : false;
-	}
+class MediaTrigger {
+	constructor(params){
+        this.media = params.media;
+        this.breakpoints = params.triggers;
+        this.currentBreakpoint = 0;
+        this.timeInterval = params.precision;
+        this.logs = (typeof params.logs == "boolean") ? params.logs : false;
+    }
 
-	_check() {
-		if (this.logs) console.log("[MediaTrigger] "+this.media.currentTime);
-		if (this.ctime >= this.breakpoints[0].triggerTime) {
-			if (this.logs && typeof this.breakpoints[0].name != undefined) console.warn("[MediaTrigger] "+this.breakpoints[0].name);
-			this.breakpoints[0].action();
-			this.breakpoints.shift();
-			if (this.breakpoints.length <= 0) clearInterval(this.interval);
-		}
-	}
+    _check() {
+        if (this.logs) console.log("[MediaTrigger] " + this.media.currentTime);
+        if (this.breakpoints[this.currentBreakpoint].triggerTime) {
+            if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
+                this._triggerAction();
+            }
+        } else if (this.breakpoints[this.currentBreakpoint].triggerPercent) {
+            if (this.breakpoints[this.currentBreakpoint].triggerPercent > 1) console.warn("[MediaTrigger] triggerPercents must be set between 0 and 1");
+            else if (this.ctime / this.media.duration >= this.breakpoints[this.currentBreakpoint].triggerPercent) {
+                this._triggerAction();
+            }
+        };
+    }
 
-	listen() {
-		var that = this;
-		this.interval = setInterval(function(){
-			that.ctime = that.media.currentTime;
-			that._check();
-		}, this.timeInterval);
-	}
+    _triggerAction() {
+        if (this.logs && typeof this.breakpoints[this.currentBreakpoint].name != undefined) console.warn("[MediaTrigger] " + this.breakpoints[this.currentBreakpoint].name);
+        this.breakpoints[this.currentBreakpoint].action();
+        this.currentBreakpoint++;
+
+        if (this.currentBreakpoint > this.breakpoints.length - 1) clearInterval(this.interval);
+    }
+
+    start() {
+        this.currentBreakpoint = 0;
+        var that = this;
+        this.interval = setInterval(function () {
+            that.ctime = that.media.currentTime;
+            that._check();
+        }, this.timeInterval);
+    }
+
+    stop() {
+        clearInterval(this.interval);
+    }
 }
-
-
-
-
-
