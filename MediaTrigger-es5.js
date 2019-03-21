@@ -1,15 +1,16 @@
 /*
-    MediaTrigger v.1.2
+    MediaTrigger v.1.3
 */
 (function (window, document, undefined) {
     function MediaTrigger(params) {
         this.media = params.media;
         this.breakpoints = params.triggers;
         this.currentBreakpoint = 0;
-        this.timeInterval = params.precision;
+        this._bindedCheck = this._check.bind(this);
     }
-
-    MediaTrigger.prototype._check = function () {
+    
+    MediaTrigger.prototype._check = function () {                
+        this.ctime = this.media.currentTime;
         if (this.breakpoints[this.currentBreakpoint].triggerTime) {
             if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                 this._triggerAction();
@@ -26,20 +27,16 @@
         this.breakpoints[this.currentBreakpoint].action();
         this.currentBreakpoint++;
 
-        if (this.currentBreakpoint > this.breakpoints.length - 1) clearInterval(this.interval);
+        if (this.currentBreakpoint > this.breakpoints.length - 1) this.stop();
     }
 
     MediaTrigger.prototype.start = function () {
         this.currentBreakpoint = 0;
-        var that = this;
-        this.interval = setInterval(function () {
-            that.ctime = that.media.currentTime;
-            that._check();
-        }, this.timeInterval);
+        this.media.addEventListener('timeupdate', this._bindedCheck);
     }
 
     MediaTrigger.prototype.stop = function () {
-        clearInterval(this.interval);
+        this.media.removeEventListener('timeupdate', this._bindedCheck);
     }
 
     window.MediaTrigger = MediaTrigger;

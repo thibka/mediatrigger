@@ -1,5 +1,5 @@
 /*
-    MediaTrigger v.1.2
+    MediaTrigger v.1.3
 */
 class MediaTrigger {
 
@@ -7,10 +7,11 @@ class MediaTrigger {
         this.media = params.media;
         this.breakpoints = params.triggers;
         this.currentBreakpoint = 0;
-        this.timeInterval = params.precision;
+        this._bindedCheck = this._check.bind(this);
     }
 
     _check() {
+        this.ctime = this.media.currentTime;
         if (this.breakpoints[this.currentBreakpoint].triggerTime) {
             if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                 this._triggerAction();
@@ -27,19 +28,16 @@ class MediaTrigger {
         this.breakpoints[this.currentBreakpoint].action();
         this.currentBreakpoint++;
 
-        if (this.currentBreakpoint > this.breakpoints.length - 1) clearInterval(this.interval);
+        if (this.currentBreakpoint > this.breakpoints.length - 1) this.stop();
     }
 
     start() {
         this.currentBreakpoint = 0;
         var that = this;
-        this.interval = setInterval(function () {
-            that.ctime = that.media.currentTime;
-            that._check();
-        }, this.timeInterval);
+        this.media.addEventListener('timeupdate', this._bindedCheck);
     }
 
     stop() {
-        clearInterval(this.interval);
+        this.media.removeEventListener('timeupdate', this._bindedCheck);
     }
 }

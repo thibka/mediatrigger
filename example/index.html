@@ -15,19 +15,19 @@
     </video>
     <script>
         /*
-        MediaTrigger v.1.2
+            MediaTrigger v.1.3
         */
-        (function (window, document, undefined) {
-            function MediaTrigger(params) {
+        class MediaTrigger {
+
+            constructor(params) {
                 this.media = params.media;
                 this.breakpoints = params.triggers;
                 this.currentBreakpoint = 0;
-                this.timeInterval = params.precision;
-                this.logs = (typeof params.logs == "boolean") ? params.logs : false;
+                this._bindedCheck = this._check.bind(this);
             }
 
-            MediaTrigger.prototype._check = function () {
-                if (this.logs) console.log("[MediaTrigger] " + this.media.currentTime);
+            _check() {
+                this.ctime = this.media.currentTime;
                 if (this.breakpoints[this.currentBreakpoint].triggerTime) {
                     if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                         this._triggerAction();
@@ -40,36 +40,27 @@
                 };
             }
 
-            MediaTrigger.prototype._triggerAction = function () {
-                if (this.logs && typeof this.breakpoints[this.currentBreakpoint].name != undefined) console.warn("[MediaTrigger] " + this.breakpoints[this.currentBreakpoint].name);
+            _triggerAction() {
                 this.breakpoints[this.currentBreakpoint].action();
-                this.currentBreakpoint ++;
+                this.currentBreakpoint++;
 
-                if (this.currentBreakpoint > this.breakpoints.length - 1) clearInterval(this.interval);
+                if (this.currentBreakpoint > this.breakpoints.length - 1) this.stop();
             }
 
-            MediaTrigger.prototype.start = function () {
-                this.currentBreakpoint = 0;              
+            start() {
+                this.currentBreakpoint = 0;
                 var that = this;
-                this.interval = setInterval(function () {
-                    that.ctime = that.media.currentTime;
-                    that._check();
-                }, this.timeInterval);
+                this.media.addEventListener('timeupdate', this._bindedCheck);
             }
 
-            MediaTrigger.prototype.stop = function () {
-                clearInterval(this.interval);
+            stop() {
+                this.media.removeEventListener('timeupdate', this._bindedCheck);
             }
+        }
 
-            window.MediaTrigger = MediaTrigger;
-        })(window, document);
-
-        var video = document.getElementById('video');
         var mediaTrigger = new MediaTrigger(
             {
-                media: video,
-                logs: false, // If set to true, the console will log on time the name of each trigger
-                precision: 20, // The lower the value, the more precise it will be. You probably shouldn't go under 15 though.
+                media: document.getElementById('video'),
                 triggers: [
                     {
                         triggerTime: 1.5, // In seconds
@@ -79,7 +70,7 @@
                         }
                     },
                     {
-                        triggerPercent: .01, // Between 0 and 1 
+                        triggerPercent: .005, // Between 0 and 1 
                         action: function () {
                             console.log('Second trigger');
                         }

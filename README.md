@@ -11,7 +11,6 @@ var audio = new Audio([URLString]);
 var mediaTrigger = new MediaTrigger(
     {
         media: audio, 
-        precision: 20, // The lower the value, the more precise it will be. You probably shouldn't go under 15 though.
         triggers: [
             {	
                 triggerTime: 2.5, // In seconds
