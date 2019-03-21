@@ -2,16 +2,15 @@
     MediaTrigger v.1.2
 */
 class MediaTrigger {
+
 	constructor(params){
         this.media = params.media;
         this.breakpoints = params.triggers;
         this.currentBreakpoint = 0;
         this.timeInterval = params.precision;
-        this.logs = (typeof params.logs == "boolean") ? params.logs : false;
     }
 
     _check() {
-        if (this.logs) console.log("[MediaTrigger] " + this.media.currentTime);
         if (this.breakpoints[this.currentBreakpoint].triggerTime) {
             if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                 this._triggerAction();
@@ -25,7 +24,6 @@ class MediaTrigger {
     }
 
     _triggerAction() {
-        if (this.logs && typeof this.breakpoints[this.currentBreakpoint].name != undefined) console.warn("[MediaTrigger] " + this.breakpoints[this.currentBreakpoint].name);
         this.breakpoints[this.currentBreakpoint].action();
         this.currentBreakpoint++;
 

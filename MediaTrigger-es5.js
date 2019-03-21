@@ -7,11 +7,9 @@
         this.breakpoints = params.triggers;
         this.currentBreakpoint = 0;
         this.timeInterval = params.precision;
-        this.logs = (typeof params.logs == "boolean") ? params.logs : false;
     }
 
     MediaTrigger.prototype._check = function () {
-        if (this.logs) console.log("[MediaTrigger] " + this.media.currentTime);
         if (this.breakpoints[this.currentBreakpoint].triggerTime) {
             if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                 this._triggerAction();
@@ -25,7 +23,6 @@
     }
 
     MediaTrigger.prototype._triggerAction = function () {
-        if (this.logs && typeof this.breakpoints[this.currentBreakpoint].name != undefined) console.warn("[MediaTrigger] " + this.breakpoints[this.currentBreakpoint].name);
         this.breakpoints[this.currentBreakpoint].action();
         this.currentBreakpoint++;
 
