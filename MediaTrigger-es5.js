@@ -1,5 +1,5 @@
 /*
-    MediaTrigger v.1.3
+    MediaTrigger v.1.3.1
 */
 (function (window, document, undefined) {
     function MediaTrigger(params) {
@@ -11,7 +11,7 @@
     
     MediaTrigger.prototype._check = function () {                
         this.ctime = this.media.currentTime;
-        if (this.breakpoints[this.currentBreakpoint].triggerTime) {
+        if (this.breakpoints[this.currentBreakpoint].triggerTime  >= 0) {
             if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                 this._triggerAction();
             }
