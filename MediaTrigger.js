@@ -16,7 +16,7 @@ class MediaTrigger {
             if (this.ctime >= this.breakpoints[this.currentBreakpoint].triggerTime) {
                 this._triggerAction();
             }
-        } else if (this.breakpoints[this.currentBreakpoint].triggerPercent) {
+        } else if (this.breakpoints[this.currentBreakpoint].triggerPercent >= 0) {
             if (this.breakpoints[this.currentBreakpoint].triggerPercent > 1) console.warn("[MediaTrigger] triggerPercents must be set between 0 and 1");
             else if (this.ctime / this.media.duration >= this.breakpoints[this.currentBreakpoint].triggerPercent) {
                 this._triggerAction();
