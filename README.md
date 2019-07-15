@@ -6,7 +6,7 @@ Time points can be defined in seconds or percents.
 
 ## ES5
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@1.3.2/MediaTrigger-es5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.0/MediaTrigger-es5.min.js"></script>
 ```
 ## Webpack
 ```bash
@@ -15,25 +15,18 @@ npm i @thibka/mediatrigger
 
 # Usage
 ```javascript
-var mediaTrigger = new MediaTrigger(
-    {
-        media: new Video([URLString]), 
-        triggers: [
-            {	
-                triggerTime: 2.5, // In seconds
-                action: function(){ 
-                    // ...
-                }
-            },
-            {	
-                triggerPercent: .25, // Between 0 and 1 
-                action: function(){ 
-                    // ...
-                }
-            }
-        ]
-    });
+var mediaTrigger = new MediaTrigger({
+    media: document.querySelector('video'), 
+    triggers: [
+        ['2.5s', function(){ 
+            // ...
+        }], 
+        ['25%', function(){ 
+            // ...
+        }]
+    ]
+});
 
 mediaTrigger.start();
-mediaTrigger.stop();
+// mediaTrigger.stop();
 ```
