@@ -6,7 +6,7 @@ Time points can be defined in seconds or percents.
 
 ## ES5
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.0/MediaTrigger-es5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.1/MediaTrigger-es5.min.js"></script>
 ```
 ## Webpack
 ```bash

@@ -1,5 +1,5 @@
 /*
-    MediaTrigger v.2.0.0
+    MediaTrigger v.2.0.1
 */
 (function (window, document, undefined) {
     function MediaTrigger(params) {
@@ -30,7 +30,7 @@
      */
     MediaTrigger.prototype._handleTriggers = function() {
         var handledTriggers = [];
-        this.params.triggers.forEach(trigger => {
+        this.params.triggers.forEach(function(trigger) {
             var unit = trigger[0].slice(-1);
             switch (unit) {
                 case 's': 
