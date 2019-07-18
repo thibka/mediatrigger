@@ -1,5 +1,5 @@
 /*
-    MediaTrigger v.2.0.1
+    MediaTrigger v.2.0.2
 */
 (function (window, document, undefined) {
     function MediaTrigger(params) {
@@ -13,10 +13,10 @@
 
     MediaTrigger.prototype._getMediaDuration = function() {
         if (Number.isNaN(this.media.duration)) {
-            this.media.addEventListener('loadedmetadata', function() {
+            this.media.addEventListener('durationchange', function() {
                 this.mediaDuration = this.media.duration;
                 this.triggers = this._sortTriggers(this._handleTriggers());
-                if (this.startASAP) this.media.addEventListener('timeupdate', this._bindedCheck);;
+                if (this.startASAP) this.media.addEventListener('timeupdate', this._bindedCheck);                
             }.bind(this));
         } else {
             this.mediaDuration = this.media.duration;
@@ -49,8 +49,7 @@
                 default:
                     console.warn("[MediaTrigger] Trigger unit not recognized. Try 's' or '%'.");
             }
-        });
-        
+        }.bind(this));
         return handledTriggers;
     }
 
@@ -88,7 +87,9 @@
 
     MediaTrigger.prototype.start = function () {
         this.currentTrigger = 0;
-        if (this.mediaDuration != undefined) this.media.addEventListener('timeupdate', this._bindedCheck);
+        if (this.mediaDuration != undefined) {
+            this.media.addEventListener('timeupdate', this._bindedCheck);
+        }
         else {
             this.startASAP = true;
         }

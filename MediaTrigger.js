@@ -1,5 +1,5 @@
 /*
-    MediaTrigger v.2.0.0
+    MediaTrigger v.2.0.2
 */
 export default class MediaTrigger {
     constructor(params) {
@@ -13,10 +13,10 @@ export default class MediaTrigger {
 
     _getMediaDuration() {
         if (Number.isNaN(this.media.duration)) {
-            this.media.addEventListener('loadedmetadata', () => {
+            this.media.addEventListener('durationchange', () => {
                 this.mediaDuration = this.media.duration;
                 this.triggers = this._sortTriggers(this._handleTriggers());
-                if (this.startASAP) this.media.addEventListener('timeupdate', this._bindedCheck);;
+                if (this.startASAP) this.media.addEventListener('timeupdate', this._bindedCheck);
             });
         } else {
             this.mediaDuration = this.media.duration;
@@ -50,7 +50,6 @@ export default class MediaTrigger {
                     console.warn("[MediaTrigger] Trigger unit not recognized. Try 's' or '%'.");
             }
         });
-
         return handledTriggers;
     }
 
@@ -88,7 +87,9 @@ export default class MediaTrigger {
 
     start() {
         this.currentTrigger = 0;
-        if (this.mediaDuration != undefined) this.media.addEventListener('timeupdate', this._bindedCheck);
+        if (this.mediaDuration != undefined) {
+            this.media.addEventListener('timeupdate', this._bindedCheck);
+        }
         else {
             this.startASAP = true;
         }
