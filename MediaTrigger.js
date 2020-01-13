@@ -60,11 +60,11 @@ export default class MediaTrigger {
      * Sort triggers chronologically.
      */
     _sortTriggers(triggers) {
-        function compare({ triggerTime }, { triggerTime }) {
-            if (triggerTime < triggerTime) {
+        function compare({ triggerTimeA }, { triggerTimeB }) {
+            if (triggerTimeA < triggerTimeB) {
                 return -1;
             }
-            if (triggerTime > triggerTime) {
+            if (triggerTimeA > triggerTimeB) {
                 return 1;
             }
             return 0;
