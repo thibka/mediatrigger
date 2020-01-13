@@ -1,12 +1,13 @@
 # Description
 This class allows callback functions to be triggered at specific time points in an audio or video file.
 Time points can be defined in seconds or percents.
+Each callback is triggered only once.
 
 # Install
 
 ## ES5
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.2/MediaTrigger-es5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.3/MediaTrigger-es5.min.js"></script>
 ```
 ## Webpack
 ```bash

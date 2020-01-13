@@ -1,6 +1,6 @@
-/*
-    MediaTrigger v.2.0.2
-*/
+/**
+ * MediaTrigger v.2.0.3
+ */
 export default class MediaTrigger {
     constructor(params) {
         this.params = params;
@@ -16,7 +16,10 @@ export default class MediaTrigger {
             this.media.addEventListener('durationchange', () => {
                 this.mediaDuration = this.media.duration;
                 this.triggers = this._sortTriggers(this._handleTriggers());
-                if (this.startASAP) this.media.addEventListener('timeupdate', this._bindedCheck);
+                if (this.startASAP) {
+                    this.media.addEventListener('timeupdate', this._bindedCheck);                
+                    this.media.addEventListener('ended', this._bindedCheck);
+                }
             });
         } else {
             this.mediaDuration = this.media.duration;
@@ -89,6 +92,7 @@ export default class MediaTrigger {
         this.currentTrigger = 0;
         if (this.mediaDuration != undefined) {
             this.media.addEventListener('timeupdate', this._bindedCheck);
+            this.media.addEventListener('ended', this._bindedCheck);
         }
         else {
             this.startASAP = true;
@@ -97,5 +101,6 @@ export default class MediaTrigger {
 
     stop() {
         this.media.removeEventListener('timeupdate', this._bindedCheck);
+        this.media.removeEventListener('ended', this._bindedCheck);
     }
 }

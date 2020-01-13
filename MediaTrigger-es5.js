@@ -1,6 +1,6 @@
-/*
-    MediaTrigger v.2.0.2
-*/
+/**
+ * MediaTrigger v.2.0.3
+ */
 (function (window, document, undefined) {
     function MediaTrigger(params) {
         this.params = params;
@@ -16,7 +16,10 @@
             this.media.addEventListener('durationchange', function() {
                 this.mediaDuration = this.media.duration;
                 this.triggers = this._sortTriggers(this._handleTriggers());
-                if (this.startASAP) this.media.addEventListener('timeupdate', this._bindedCheck);                
+                if (this.startASAP) {
+                    this.media.addEventListener('timeupdate', this._bindedCheck);                
+                    this.media.addEventListener('ended', this._bindedCheck);
+                }
             }.bind(this));
         } else {
             this.mediaDuration = this.media.duration;
@@ -71,6 +74,8 @@
     }
     
     MediaTrigger.prototype._check = function () {
+        console.log("check");
+        
         if (this.triggers[this.currentTrigger].triggerTime >= 0) {
             if (this.media.currentTime >= this.triggers[this.currentTrigger].triggerTime) {
                 this._triggerAction();
@@ -89,6 +94,7 @@
         this.currentTrigger = 0;
         if (this.mediaDuration != undefined) {
             this.media.addEventListener('timeupdate', this._bindedCheck);
+            this.media.addEventListener('ended', this._bindedCheck);
         }
         else {
             this.startASAP = true;
@@ -97,6 +103,7 @@
 
     MediaTrigger.prototype.stop = function () {
         this.media.removeEventListener('timeupdate', this._bindedCheck);
+        this.media.removeEventListener('ended', this._bindedCheck);
     }
 
     window.MediaTrigger = MediaTrigger;
