@@ -7,7 +7,7 @@ Each callback is triggered only once.
 
 ## ES5
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.3/MediaTrigger-es5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@thibka/mediatrigger@2.0.4/MediaTrigger-es5.min.js"></script>
 ```
 ## Webpack
 ```bash

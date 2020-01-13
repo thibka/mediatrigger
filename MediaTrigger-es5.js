@@ -1,5 +1,5 @@
 /**
- * MediaTrigger v.2.0.3
+ * MediaTrigger v.2.0.4
  */
 (function (window, document, undefined) {
     function MediaTrigger(params) {
