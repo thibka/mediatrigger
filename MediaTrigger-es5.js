@@ -73,9 +73,7 @@
         return triggers.sort(compare);
     }
     
-    MediaTrigger.prototype._check = function () {
-        console.log("check");
-        
+    MediaTrigger.prototype._check = function () {        
         if (this.triggers[this.currentTrigger].triggerTime >= 0) {
             if (this.media.currentTime >= this.triggers[this.currentTrigger].triggerTime) {
                 this._triggerAction();
