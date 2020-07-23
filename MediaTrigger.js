@@ -1,5 +1,5 @@
 /**
- * MediaTrigger v.2.0.4
+ * MediaTrigger v.2.0.5
  */
 export default class MediaTrigger {
     constructor(params) {
